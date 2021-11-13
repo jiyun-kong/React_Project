@@ -16,3 +16,8 @@
 - 반응 속도 체크
 - 가위 바위 보
 - 로또
+
+3. React start
+- npx create-react-app [앱 이름]
+- cd [폴더]
+- npm start
