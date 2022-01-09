@@ -79,3 +79,4 @@ const m2 = " 입니다."
 console.log(m1 + name + m2)
 
 console.log(m1 + age + "살" + m2)  // 숫자가 문자형으로 변환되었음을 알 수 있다.
+
