@@ -306,3 +306,221 @@ function add(num1, num2) {
 }
 const result = add(2, 3);
 console.log(result)
+
+// 8. 함수 표현식, 화살표 함수 (arrow function)
+// 함수 선언문 : 어디서든 호출 가능
+hello();
+function hello() {
+  console.log("Hello")
+}
+hello();
+// 자바스크립트는 interpreter language로서, 위에서 아래로 한 줄씩 읽어 내려간다.
+// console.log(num);
+// let num = 1;
+// Error.num is not defined 될 것이다.
+
+// 자바스크립트는 실행 전 초기화 단계에서 코드의 모든 함수 선언문을 찾아서 정리해둔다. 사용 가능 범위가 함수 선언 이후에서 그 전까지로 확장된다. ▶ 호이스팅 (hoisting)
+
+// 한편, 함수 표현식은 코드에 도달하면 생성된다.
+// helloTwo() : Uncaught ReferenceError: Cannot access 'helloTwo' before initialization 
+let helloTwo = function() {
+  console.log("HelloTwo");
+}
+helloTwo()
+
+// 화살표 함수
+/*
+let mul = function(num1, num2) {
+  return num1*num2;
+}
+*/
+
+/*
+let mul = (num1, num2) => {
+  return num1 * num2
+}
+*/
+
+/* return 함수는 중괄호를 괄호로 바꾸고 return 키워드를 없앨 수 있다.
+let mul = (num1, num2) => (
+  num1 * num2
+)
+*/
+
+// return 함수의 코드가 한줄이면 괄호를 생략할 수 있다.
+let mul = (num1, num2) => num1*num2;
+console.log(mul(10,20))
+
+// 인수가 하나이면 괄호를 생략할 수 있다.
+let helloThree = name => `Hello ${name}`;
+console.log(helloThree('Jenet'))
+
+// 인수가 없는 경우에는 생략하면 안된다.
+let showMeError = () => 'Error';
+console.log(showMeError())
+
+
+// 9. 객체 (Object)
+const superman = {
+  name : 'Clark',
+  age : 33,
+}
+
+console.log(superman.name);
+console.log(superman['age']);
+
+superman.geder = 'male';
+superman['haircolor'] = 'brown';
+
+delete superman.gender;
+
+const myName = 'wonderwoman'
+const myAge = 150
+
+const wonderwoman = {
+  myName,
+  myAge,
+  gender : 'female',
+}
+console.log(wonderwoman)
+console.log('birthDay' in wonderwoman)
+console.log('myAge' in wonderwoman)
+
+// for..in 반복문
+for (let key in wonderwoman) {
+  console.log(key, wonderwoman[key]);
+}
+
+/*
+const userName = prompt('이름을 입력하세요')
+const userAge = prompt('나이를 입력하세요')
+
+function userMaking (name, age) {
+  return user = {
+    name,
+    age,
+  };
+}
+console.log(userMaking(userName, userAge))
+*/
+
+
+function isAdultOrKid(user) {
+  if (user.age < 20) {
+    return false;
+  } 
+  return true;
+}
+
+const Mike = {
+  name : 'Mike',
+  age : '28',
+  hobby : 'FootBall',
+};
+console.log(isAdultOrKid(Mike))
+
+const Jenet = {
+  name : 'Jenet',
+  hobby : 'Programming',
+};
+console.log(isAdultOrKid(Jenet))  // age가 입력되지 않았는데 true를 반환.
+
+/*
+function isAdultOrKid(user) {
+  if (!(age in user) || user.age < 20) {
+    return false;
+  }
+  return true;
+}
+*/
+
+
+// 10. 객체(Object) - method, this
+// method : 객체 프로퍼티로 할당된 함수
+const spyderman = {
+  name : 'spyderman',
+  age : 30,
+  ability : function() {
+    console.log(`${this.name} is smart!`)
+  }
+  /*
+  ability () {
+    console.log("smart!");
+  }
+  */
+}
+spyderman.ability();
+
+// this
+let boy = {
+  name : 'Mike',
+  sayHelloStu : function() {
+    console.log(`Hello, I'm ${this.name}`);
+  },
+}
+let girl = {
+  name : 'Jane',
+  sayHelloStu : function() {
+    console.log(`Hello, I'm ${this.name}`);
+  },
+}
+
+boy.sayHelloStu();
+girl.sayHelloStu();
+
+// 화살표 함수는 일반 함수와는 달리 자신만의 this를 가지지 않음. 화살표 함수 내부에서 this를 사용하면, 그 this는 외부에서 값을 가져 옴. 안 쓰는 것을 추천.
+
+/*
+let boy = {
+  name : 'Mike',
+  sayHello : () => {
+    console.log(this);
+  }
+}
+
+boy.sayHello();     // this != boy
+
+- 브라우저 환경 : window
+- Node JS : global
+*/
+
+
+// 11. 배열
+// 순서가 있는 리스트
+// 배열은 문자 뿐만 아니라 숫자, 객체, 함수 등도 포함할 수 있음
+let arr = [
+  '민수',
+  3,
+  false,
+  {
+    name : 'Mike',
+    age : 30,
+  },
+  function() {
+    console.log('Test')
+  }
+];
+
+console.log(arr.length)
+arr.pop()
+console.log(arr)
+
+arr.push('180cm')
+console.log(arr)
+
+// 추가 : unshift
+arr.unshift('85kg');
+console.log(arr)
+
+// 제거 : shift
+arr.shift();
+console.log(arr)
+
+for (let idx = 0; idx < arr.length; idx++) {
+  console.log(arr[idx]);
+}
+
+// 반복문 : for .. of
+for (let arrs of arr) {
+  console.log(arrs);
+}
