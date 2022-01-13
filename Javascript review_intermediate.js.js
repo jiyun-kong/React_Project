@@ -119,3 +119,95 @@ const arr =
 
 arrUser = Object.fromEntries(arr);
 console.log(arrUser)
+
+// 어떤 값이 key가 될 지 모를 때 사용하면 좋다.
+function makeObj(key, val) {
+  return {
+    [key] : val,
+  };
+}
+
+const obj = makeObj('성별', 'male');
+console.log(obj);
+
+
+
+// 4. symbol (심볼)
+// property key : 문자형
+const objTwo = {
+  1 : '1입니다.',
+  false : '거짓입니다.',
+}
+
+console.log(Object.keys(objTwo));  // ["1", "false"]
+console.log(objTwo['1']);             // "1입니다."
+console.log(objTwo['false']);         // "거짓입니다."
+
+// Symbol : 유일한 식별자
+const s1 = Symbol();        // new를 붙이지 않는다
+const s2 = Symbol();
+
+console.log(s1);            // Symbol()
+console.log(s2);            // Symbol()
+console.log(s1 == s2);      // false
+
+
+// Symbol : 유일성 보장
+const id = Symbol('id');
+const id2 = Symbol('id');
+console.log(id == id2);
+console.log(id === id2);
+
+// property key : 심볼형
+const id3 = Symbol('id');   // id는 심볼키
+const userMe = {
+  name : '김철수',
+  age : 30,
+  [id3] : 'myId',
+}
+
+console.log(userMe);        // { "name": "김철수", "age": 30 }
+console.log(userMe[id3]);   // "myId"
+console.log(Object.keys(userMe));   // ["name", "age"]
+console.log(Object.values(userMe)); // ["김철수", 30]
+
+// 심볼은 특정 객체에 원본 객체를 건드리지 않는 선에서 값을 추가하고 싶을때 유용하게 사용가능하다. (유일성을 보장받고, 일반적인 순회 출력 옵션에서 출력이 되지 않기 때문)
+
+
+// Symbol.for() : 전역 심볼
+// 하나의 심볼만 보장받을 수 있다.
+// 없으면 만들고, 있으면 가져오기 때문이다.
+// Symbol 함수는 매번 다른 Symbol 값을 생성하지만, Symbol.for 메소드는 하나를 생성한 뒤 키를 통해 같은 Symbol을 공유한다.
+
+const idOne = Symbol.for('id');
+const idTwo = Symbol.for('id');
+
+console.log(idOne === idTwo);     // true
+console.log(Symbol.keyFor(idOne));  // Symbol을 생성할 때 만들었던 이름 알려줌 : id
+
+
+// 숨겨진 Symbol key 보는 법
+console.log(Object.getOwnPropertySymbols(userMe));    // id
+Reflect.ownKeys(userMe);
+
+
+// Symbol이 헷갈려서 해보는 정리
+// 다른 개발자가 만들어 놓은 객체
+const otherUser = {
+  name : 'Mike',
+  age : 40,
+};
+
+// 내가 작업
+//otherUser.showName = function() {};   // "His showName is undefined."
+const showName = Symbol('show name');
+otherUser[showName] = function () {
+  console.log(this.name);
+};
+
+otherUser[showName]();  
+
+// 사용자가 접속하면 보는 메세지
+for (let key in otherUser) {
+  console.log(`His ${key} is ${otherUser[key]}.`);
+}
