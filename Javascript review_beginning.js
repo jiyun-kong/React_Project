@@ -524,3 +524,4 @@ for (let idx = 0; idx < arr.length; idx++) {
 for (let arrs of arr) {
   console.log(arrs);
 }
+
