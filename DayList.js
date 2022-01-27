@@ -1,10 +1,20 @@
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import dummy from "../db/data.json"
 
 function DayList() {
+    const [days, setDays] = useState([]);
+
+    useEffect(() => {
+        fetch("http://localhost:3001/days").then(response => {
+            return response.json()
+        }).then(data => {
+            setDays(data);
+        });
+    }, []);
+
     return (
         <ul className="list_day">
-            {dummy.days.map(dayElement => (
+            {days.map(dayElement => (
                 <li key={dayElement.id}>
                     <Link to={`./day/${dayElement.day}`}>Day {dayElement.day}</Link>
                 </li>
